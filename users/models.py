@@ -26,7 +26,7 @@ class OrderStatus(models.TextChoices):
 class UserOrder(models.Model):
     status = models.CharField(max_length=20, choices=OrderStatus.choices,
                               default=OrderStatus.ANDAMENTO)
-    buyed_at = models.TimeField(auto_now_add=True)
+    buyed_at = models.DateTimeField(auto_now_add=True)
 
     user = models.ForeignKey(
         "users.User",
