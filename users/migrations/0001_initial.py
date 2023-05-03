@@ -139,7 +139,7 @@ class Migration(migrations.Migration):
                         max_length=20,
                     ),
                 ),
-                ("buyed_at", models.TimeField(auto_now_add=True)),
+                ("buyed_at", models.DateTimeField(auto_now_add=True)),
                 (
                     "user",
                     models.ForeignKey(

@@ -3,11 +3,11 @@ from django.db import models
 
 class Category(models.TextChoices):
     BOTAS = "Botas",
-    CHINELOS_SANDÁLIAS = "Chinelos e Sandálias",
+    CHINELOS_SANDALIAS = "Chinelos e Sandálias",
     CHUTEIRAS = "Chuteiras",
-    SAPATÊNIS = "Sapatênis",
-    TÊNIS = "Tênis",
-    TÊNIS_CORRIDA = "Tênis de corrida",
+    SAPATENIS = "Sapatênis",
+    TENIS = "Tênis",
+    TENIS_CORRIDA = "Tênis de corrida",
 
 
 class Product(models.Model):
