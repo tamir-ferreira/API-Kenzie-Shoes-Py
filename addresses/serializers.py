@@ -6,9 +6,3 @@ class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
         fields = "__all__"
-
-    def create(self, validated_data):
-        print("=" * 150)
-        print(validated_data)
-
-        return Address.objects.create(**validated_data)
