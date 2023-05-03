@@ -10,12 +10,6 @@ class User(AbstractUser):
     is_seller = models.BooleanField(default=False, null=True, blank=True)
     image_user = models.URLField(max_length=200, null=True, blank=True)
 
-    address = models.ForeignKey(
-        "addresses.Address",
-        on_delete=models.CASCADE,
-        related_name="address_user",
-    )
-
 
 class OrderStatus(models.TextChoices):
     REALIZADO = "Pedido realizado"
