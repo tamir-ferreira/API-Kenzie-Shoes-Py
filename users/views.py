@@ -5,14 +5,9 @@ from .serializers import UserSerializer
 from .permissions import *
 
 
-class UserView(CreateAPIView):
+class UserView(ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
-    def perform_create(self, serializer):
-        print("=" * 150)
-        print(self.request.data)
-        return serializer.save(address=self.kwargs.get("pk"))
 
 
 class UserDetailView(RetrieveUpdateDestroyAPIView):
