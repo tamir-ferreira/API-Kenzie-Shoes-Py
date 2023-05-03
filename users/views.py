@@ -10,7 +10,9 @@ class UserView(CreateAPIView):
     serializer_class = UserSerializer
 
     def perform_create(self, serializer):
-        return serializer.save(user=self.request.user)
+        print("=" * 150)
+        print(self.request.data)
+        return serializer.save(address=self.kwargs.get("pk"))
 
 
 class UserDetailView(RetrieveUpdateDestroyAPIView):
