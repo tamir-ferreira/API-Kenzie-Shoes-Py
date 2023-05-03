@@ -8,7 +8,7 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=127, unique=True)
     is_seller = models.BooleanField(default=False, null=True, blank=True)
-    image_user = models.URLField(max_length=200)
+    image_user = models.URLField(max_length=200, null=True, blank=True)
 
     address = models.ForeignKey(
         "addresses.Address",
