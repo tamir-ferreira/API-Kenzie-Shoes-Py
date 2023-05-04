@@ -17,7 +17,7 @@ class Product(models.Model):
         max_length=20, choices=Category.choices, default=Category.BOTAS
     )
     quantities = models.IntegerField(default=0)
-    bio = models.TextField()
+    description = models.TextField()
     image_product = models.URLField(max_length=200)
     user = models.ForeignKey(
         "users.User",

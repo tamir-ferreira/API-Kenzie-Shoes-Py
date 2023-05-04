@@ -17,7 +17,7 @@ class ProductSerializer(serializers.ModelSerializer):
             "value",
             "category",
             "quantities",
-            "bio",
+            "description",
             "image_product",
             "cart",
             "user",
