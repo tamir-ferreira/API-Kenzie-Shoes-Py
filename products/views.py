@@ -20,7 +20,7 @@ class ProductView(generics.ListCreateAPIView):
     paginator_class = ProductPaginator
 
     def perform_create(self, serializer) -> None:
-        serializer.save()
+        serializer.save(user=self.request.user)
 
 
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):

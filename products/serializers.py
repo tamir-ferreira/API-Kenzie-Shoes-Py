@@ -26,6 +26,4 @@ class ProductSerializer(serializers.ModelSerializer):
         exclude = ["cart"]
 
     def create(self, validated_data):
-        user_id = User.objects.get(id=1)
-        print(user_id)
-        return Product.objects.create(user=user_id, **validated_data)
+        return Product.objects.create(**validated_data)
