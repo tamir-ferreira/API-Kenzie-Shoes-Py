@@ -10,6 +10,12 @@ class User(AbstractUser):
     is_seller = models.BooleanField(default=False, null=True, blank=True)
     image_user = models.URLField(max_length=200, null=True, blank=True)
 
+    address = models.OneToOneField(
+        "addresses.Address",
+        on_delete=models.CASCADE,
+        related_name="address",
+    )
+
 
 class OrderStatus(models.TextChoices):
     REALIZADO = "Pedido realizado"
@@ -19,7 +25,8 @@ class OrderStatus(models.TextChoices):
 
 class UserOrder(models.Model):
     status = models.CharField(
-        max_length=20, choices=OrderStatus.choices, default=OrderStatus.ANDAMENTO
+        max_length=20, choices=OrderStatus.choices,
+        default=OrderStatus.ANDAMENTO
     )
     buyed_at = models.DateTimeField(auto_now_add=True)
 
