@@ -33,3 +33,9 @@ class UserOrder(models.Model):
     user = models.ForeignKey(
         "users.User", on_delete=models.CASCADE, related_name="user_order"
     )
+
+    products = models.ForeignKey(
+        "products.Product", on_delete=models.PROTECT,
+        related_name="products_order"
+    )
+    
