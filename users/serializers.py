@@ -18,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(address=address, **validated_data)
         return user
 
-    """def update(self, instance: User, validated_data: dict) -> User:
+    def update(self, instance: User, validated_data: dict) -> User:
         password = validated_data.pop("password", None)
         for key, value in validated_data.items():
             setattr(instance, key, value)
@@ -28,7 +28,6 @@ class UserSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
-    """
 
     class Meta:
         model = User
