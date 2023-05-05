@@ -5,4 +5,12 @@ from rest_framework.views import *
 
 class IsAccountOwner(permissions.BasePermission):
     def has_object_permission(self, request: Request, view: View, obj: User) -> bool:
-        return request.user.is_authenticated and obj == request.user
+        return request.user.is_authenticated
+        # and obj == request.user
+    
+
+class IsAdminReadOnly(permissions.BasePermission):
+    def has_permission(self, request: Request, view: View) -> bool:
+        return (request.method not in permissions.SAFE_METHODS or request.user.is_staff)
+
+

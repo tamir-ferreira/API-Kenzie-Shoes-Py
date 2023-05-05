@@ -50,6 +50,7 @@ MY_APPS = [
     "addresses",
     "cart",
     "products",
+    "orders",
 ]
 
 THIRD_PARTY_APPS = [
