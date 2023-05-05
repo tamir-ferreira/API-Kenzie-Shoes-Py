@@ -25,6 +25,5 @@ class ProductSerializer(serializers.ModelSerializer):
 
         read_only_fields = ["id", "user"]
 
-
     def create(self, validated_data):
         return Product.objects.create(**validated_data)

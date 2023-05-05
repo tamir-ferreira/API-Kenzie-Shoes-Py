@@ -16,7 +16,7 @@ class Product(models.Model):
     category = models.CharField(
         max_length=20, choices=Category.choices, default=Category.BOTAS
     )
-    quantities = models.IntegerField(default=0)
+    stock = models.IntegerField(default=0)
     description = models.TextField()
     image_product = models.URLField(max_length=200)
     user = models.ForeignKey(
