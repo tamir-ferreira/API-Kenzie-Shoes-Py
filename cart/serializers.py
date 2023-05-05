@@ -11,8 +11,10 @@ class CartSerializer(serializers.ModelSerializer):
 
 
 class ProductCartSerializer(serializers.ModelSerializer):
-        
     class Meta:
         model = ProductCart
         fields = ["id", "quantities", "cart_id", "product_id"]
+
+        depth = 1
+
         read_only_fields = ["id", "cart_id", "product_id"]
