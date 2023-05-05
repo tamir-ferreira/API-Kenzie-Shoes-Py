@@ -3,5 +3,5 @@ from . import views
 from rest_framework_simplejwt import views as jwt_views
 
 urlpatterns = [
-    path("cart/", views.CartView.as_view()),
+    # path("<int:product_id>/cart/", views.ProductCartView.as_view()),
 ]

@@ -8,22 +8,23 @@ from cart.serializers import CartSerializer
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        user = UserSerializer()
-        cart = CartSerializer()
-        # fields = "__all__"
-        fields: [
-            "id",
-            "name",
-            "value",
-            "category",
-            "quantities",
-            "description",
-            "image_product",
-            "cart",
-            "user",
-        ]
+        user = UserSerializer
+        cart = CartSerializer
+        fields = "__all__"
+        # fields: [
+        #     "id",
+        #     "name",
+        #     "value",
+        #     "category",
+        #     "quantities",
+        #     "description",
+        #     "image_product",
+        #     "cart",
+        #     "user",
+        # ]
+
         read_only_fields = ["id", "user"]
-        exclude = ["cart"]
+
 
     def create(self, validated_data):
         return Product.objects.create(**validated_data)
