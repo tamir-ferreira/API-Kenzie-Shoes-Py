@@ -24,7 +24,7 @@ class ProductCartView(CreateAPIView):
 class ProductCartDetailView(RetrieveUpdateDestroyAPIView):
 
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAccountOwner]
+    permission_classes = [IsAuthenticated]
 
     serializer_class = ProductCartSerializer
     queryset = ProductCart.objects.all()
