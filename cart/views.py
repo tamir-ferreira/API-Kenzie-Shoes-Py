@@ -4,12 +4,12 @@ from cart.serializers import ProductCartSerializer
 from users.permissions import IsAccountOwner
 from products.models import Product
 from .models import ProductCart
-from rest_framework.views import Response, Request, APIView
+from rest_framework.permissions import IsAuthenticated
 
 
 class ProductCartView(CreateAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAccountOwner]
+    permission_classes = [IsAuthenticated]
 
     serializer_class = ProductCartSerializer
     queryset = ProductCart.objects.all()
