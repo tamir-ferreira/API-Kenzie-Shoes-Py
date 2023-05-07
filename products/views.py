@@ -4,6 +4,7 @@ from .serializers import ProductSerializer
 from rest_framework.pagination import PageNumberPagination
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from users.permissions import IsAccountOwner
+from .premissions import IsAdminAndSellerCreateUpdatedDestroy
 
 
 class ProductPaginator(PageNumberPagination):
@@ -12,7 +13,7 @@ class ProductPaginator(PageNumberPagination):
 
 class ProductView(ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAccountOwner]
+    permission_classes = [IsAdminAndSellerCreateUpdatedDestroy]
     serializer_class = ProductSerializer
     paginator_class = ProductPaginator
 
@@ -34,6 +35,7 @@ class ProductView(ListCreateAPIView):
 
 class ProductDetailView(RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAdminAndSellerCreateUpdatedDestroy]
 
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
