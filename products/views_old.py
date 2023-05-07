@@ -1,4 +1,5 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from django.shortcuts import render
+from rest_framework import generics
 from .models import Product
 from .serializers import ProductSerializer
 from rest_framework.pagination import PageNumberPagination
@@ -10,29 +11,19 @@ class ProductPaginator(PageNumberPagination):
     page_size = 10
 
 
-class ProductView(ListCreateAPIView):
+class ProductView(generics.ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAccountOwner]
+
     serializer_class = ProductSerializer
+    queryset = Product.objects.all()
     paginator_class = ProductPaginator
-
-    def get_queryset(self):
-        queryset = Product.objects.all()
-        name = self.request.query_params.get("name", None)
-        category = self.request.query_params.get("category", None)
-
-        if name:
-            queryset = queryset.filter(name__icontains=name)
-        if category:
-            queryset = queryset.filter(category__icontains=category)
-
-        return queryset
 
     def perform_create(self, serializer) -> None:
         serializer.save(user=self.request.user)
 
 
-class ProductDetailView(RetrieveUpdateDestroyAPIView):
+class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
 
     queryset = Product.objects.all()

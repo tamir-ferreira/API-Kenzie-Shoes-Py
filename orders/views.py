@@ -1,26 +1,24 @@
-
-from rest_framework.generics import *
-from .models import *
+from rest_framework.generics import ListCreateAPIView, get_object_or_404
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from users.permissions import *
-from rest_framework.permissions import *
-from .serializers import OrderSerializer
+from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import IsAuthenticated
 from users.permissions import IsAccountOwner
+from .serializers import OrderSerializer
 from products.models import Product
+from .models import UserOrder
 
 
 class OrderView(ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAccountOwner]
-     
-    # queryset = UserOrder.objects.all()
-    # serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated, IsAccountOwner]
+    serializer_class = OrderSerializer
+    queryset = UserOrder.objects.all()
 
-    def post(self, request: Request, pk: int) -> Response:
-        product = get_object_or_404(Product, id=pk)
-        self.check_object_permissions(request, product)
-        serializer = OrderSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save(products=product, user=request.user)
+    def perform_create(self, serializer):
+        product = get_object_or_404(Product, id=self.kwargs.get("pk"))
 
-        return Response(serializer.data, status.HTTP_201_CREATED)
+        if product.stock == 0:
+            raise ValidationError("Produto sem estoque.")
+
+        self.check_object_permissions(self.request, product)
+        serializer.save(products=product, user=self.request.user)
