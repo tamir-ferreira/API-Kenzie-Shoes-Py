@@ -34,6 +34,7 @@ class ProductView(ListCreateAPIView):
 
 
 class ProductDetailView(RetrieveUpdateDestroyAPIView):
+    
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAdminAndSellerCreateUpdatedDestroy]
 

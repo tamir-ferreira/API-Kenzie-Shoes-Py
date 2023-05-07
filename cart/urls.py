@@ -1,7 +1,7 @@
 from django.urls import path
-from . import views
-from rest_framework_simplejwt import views as jwt_views
+from .views import ProductCartDetailView
+
 
 urlpatterns = [
-    # path("<int:product_id>/cart/", views.ProductCartView.as_view()),
+    path("cart/<int:pk>/", ProductCartDetailView.as_view()),
 ]

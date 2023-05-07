@@ -18,3 +18,4 @@ class ProductCartSerializer(serializers.ModelSerializer):
         depth = 1
 
         read_only_fields = ["id", "cart_id", "product_id"]
+
