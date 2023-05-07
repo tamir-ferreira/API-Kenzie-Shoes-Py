@@ -25,3 +25,5 @@ class Product(models.Model):
         related_name="user_product",
     )
 
+    class Meta:
+        ordering = ("id",)

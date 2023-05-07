@@ -1,31 +1,20 @@
-from cart.serializers import *
-from .models import *
-from rest_framework.generics import *
-from users.permissions import *
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from products.models import *
+from rest_framework.generics import CreateAPIView, get_object_or_404
+from cart.serializers import ProductCartSerializer
+from users.permissions import IsAccountOwner
+from products.models import Product
+from .models import ProductCart
 
 
 class ProductCartView(CreateAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAccountOwner]
 
-    # queryset = ProductCart.objects.all()
-    # serializer_class = ProductCartSerializer
+    serializer_class = ProductCartSerializer
+    queryset = ProductCart.objects.all()
 
-    def post(self, request: Request, pk: int) -> Response:
+    def perform_create(self, serializer):
+        product = get_object_or_404(Product, id=self.kwargs.get("pk"))
 
-        product = get_object_or_404(Product, id=pk)
-        self.check_object_permissions(request, product)
-        serializer = ProductCartSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save(product=product, cart=request.user.cart)
-
-        return Response(serializer.data, status.HTTP_201_CREATED)
-
-    # def perform_create(self, serializer):
-    #     product_id = self.kwargs['pk']
-    #     print(product_id)
-        # serializer.save(cart=self.request.user.cart, product=product_id)
-        # product = get_object_or_404(Product, self.request.)
-        # serializer.save(user=self.request.user)
+        self.check_object_permissions(self.request, product)
+        serializer.save(product=product, cart=self.request.user.cart)
