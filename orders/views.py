@@ -31,11 +31,11 @@ class OrderView(ListCreateAPIView):
             if item.stock == 0:
                 raise ValidationError("Produto indisponível")
             serializer.save(products=item, user=self.request.user)
-        send_mail("Testando",
-                  "Mensagem via django, ok",
-                  settings.EMAIL_HOST_USER,
-                  ["andrewairamdasilva@gmail.com"],
-                  False)
+        # send_mail("Testando",
+        #           "Mensagem via django, ok",
+        #           settings.EMAIL_HOST_USER,
+        #           ["andrewairamdasilva@gmail.com"],
+        #           False)
         
         
 class OrderDetailView(RetrieveUpdateAPIView):
