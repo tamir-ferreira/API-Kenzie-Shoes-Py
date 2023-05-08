@@ -21,7 +21,6 @@ class ProductView(ListCreateAPIView):
         queryset = Product.objects.all()
         name = self.request.query_params.get("name", None)
         category = self.request.query_params.get("category", None)
-
         if name:
             queryset = queryset.filter(name__icontains=name)
         if category:
@@ -40,5 +39,6 @@ class ProductDetailView(RetrieveUpdateDestroyAPIView):
 
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    lookup_url_kwarg = "pk"
+    # lookup_url_kwarg = "pk"
 
+    

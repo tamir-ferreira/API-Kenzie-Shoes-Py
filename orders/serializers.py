@@ -1,7 +1,6 @@
-from rest_framework.validators import UniqueValidator
 from rest_framework import serializers
 from .models import *
-from products.serializers import ProductSerializer
+from products.serializers import ProductSerializer, ProductOrderSerializer
 from users.serializers import UserSerializer
 from .models import UserOrder
 
@@ -9,11 +8,10 @@ from .models import UserOrder
 class OrderSerializer(serializers.ModelSerializer):
 
     user_buy = serializers.EmailField(source="user.email", read_only=True)
-    products = ProductSerializer
-
-    # def create(self, validated_data: dict) -> UserOrder:
+    products = ProductOrderSerializer
 
     class Meta:
+        
         model = UserOrder
         fields = [
             "id",
@@ -23,6 +21,6 @@ class OrderSerializer(serializers.ModelSerializer):
             "products",
         ]
 
-        depth = 1
+        # depth = 1
 
         read_only_fields = ["id", "buyed_at", "products"]

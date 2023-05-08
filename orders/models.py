@@ -22,3 +22,5 @@ class UserOrder(models.Model):
         "products.Product", on_delete=models.PROTECT,
         related_name="products_order"
     )
+
+
