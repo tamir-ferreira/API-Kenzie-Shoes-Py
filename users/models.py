@@ -15,3 +15,5 @@ class User(AbstractUser):
         on_delete=models.CASCADE,
         related_name="address",
     )
+
+    product = models.ManyToManyField("products.Product", through="cart.Cart", related_name="cart")

@@ -7,7 +7,7 @@ from cart.models import *
 
 
 class UserSerializer(serializers.ModelSerializer):
-    address = AddressSerializer()
+    address = AddressSerializer
 
     email = serializers.EmailField(
         validators=[UniqueValidator(queryset=User.objects.all())],
@@ -17,7 +17,6 @@ class UserSerializer(serializers.ModelSerializer):
         address_create = validated_data.pop("address")
         address = Address.objects.create(**address_create)
         user = User.objects.create_user(address=address, **validated_data)
-        Cart.objects.create(user=user)
         return user
 
     def update(self, instance: User, validated_data: dict) -> User:
@@ -44,7 +43,29 @@ class UserSerializer(serializers.ModelSerializer):
             "is_seller",
             "image_user",
             "address",
+            "product"
         ]
 
         read_only_fields = ["id", "is_superuser"]
         extra_kwargs = {"password": {"write_only": True}}
+
+
+class UserOrderSerializer(serializers.ModelSerializer):
+    address = AddressSerializer
+    
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "username",
+            "email",
+            "password",
+            "first_name",
+            "last_name",
+            "is_superuser",
+            "is_seller",
+            "image_user",
+            "address",
+        ]
+
+        read_only_fields = ["id", "is_superuser"]
