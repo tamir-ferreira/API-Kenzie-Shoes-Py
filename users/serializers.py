@@ -7,7 +7,7 @@ from cart.models import *
 
 
 class UserSerializer(serializers.ModelSerializer):
-    address = AddressSerializer
+    address = AddressSerializer()
 
     email = serializers.EmailField(
         validators=[UniqueValidator(queryset=User.objects.all())],
