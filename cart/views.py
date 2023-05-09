@@ -1,5 +1,5 @@
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.generics import CreateAPIView, get_object_or_404, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, get_object_or_404, RetrieveUpdateDestroyAPIView
 from cart.serializers import ProductCartSerializer
 from users.permissions import IsAccountOwner
 from products.models import Product
@@ -7,12 +7,23 @@ from .models import Cart
 from rest_framework.permissions import IsAuthenticated
 
 
-class ProductCartView(CreateAPIView):
+class ProductCartView(ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     serializer_class = ProductCartSerializer
     queryset = Cart.objects.all()
+
+    # def get_queryset(self):
+    #     cart_product = self.queryset.filter(user=self.request.user.id)
+    #     for product in cart_product:
+    #         if cart_product.product.id == self.kwargs.get("pk"):
+    #         print(cart_product)
+
+        #     cart_product = self.queryset.filter(id=cart_product.id)
+            
+            # return self.queryset.get(id=cart_product.id)
+        # return self.queryset
 
     def perform_create(self, serializer):
         product = get_object_or_404(Product, id=self.kwargs.get("pk"))
@@ -24,7 +35,7 @@ class ProductCartView(CreateAPIView):
 class ProductCartDetailView(RetrieveUpdateDestroyAPIView):
 
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAccountOwner]
 
     serializer_class = ProductCartSerializer
     queryset = Cart.objects.all()

@@ -7,8 +7,8 @@ from rest_framework.permissions import *
 
 
 class UserView(ListCreateAPIView):
-    # authentication_classes = [JWTAuthentication]
-    # permission_classes = [IsAdminReadOnly]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAdminReadOnly]
     queryset = User.objects.all()
     serializer_class = UserSerializer
 

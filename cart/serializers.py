@@ -8,7 +8,7 @@ class ProductCartSerializer(serializers.ModelSerializer):
         model = Cart
         fields = ["id", "quantities", "user", "product"]
 
-        depth = 1 
+        # depth = 1 
 
         read_only_fields = ["id", "user", "product"]
 
