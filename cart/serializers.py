@@ -6,9 +6,7 @@ class ProductCartSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cart
-        fields = ["id", "quantities", "user", "product"]
+        fields = ["id", "quantities", "user_id", "product"]
 
-        # depth = 1 
-
-        read_only_fields = ["id", "user", "product"]
+        read_only_fields = ["id", "user_id", "product"]
 

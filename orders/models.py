@@ -2,15 +2,15 @@ from django.db import models
 
 
 class OrderStatus(models.TextChoices):
-    REALIZADO = "Pedido realizado"
-    ANDAMENTO = "Pedido em andamento"
-    ENTREGUE = "Pedido entregue"
+    REALIZADO = "Realizado"
+    ANDAMENTO = "Em andamento"
+    ENTREGUE = "Entregue"
 
 
 class UserOrder(models.Model):
     status = models.CharField(
         max_length=20, choices=OrderStatus.choices,
-        default=OrderStatus.ANDAMENTO
+        default=OrderStatus.REALIZADO
     )
     buyed_at = models.DateTimeField(auto_now_add=True)
 
