@@ -37,7 +37,7 @@ ALLOWED_HOSTS = []
 
 RENDER_EXTERNAL_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME")
 if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS +=[RENDER_EXTERNAL_HOSTNAME, "0.0.0.0"]
+    ALLOWED_HOSTS += [RENDER_EXTERNAL_HOSTNAME, "0.0.0.0"]
 
 # Application definition
 
@@ -61,6 +61,7 @@ MY_APPS = [
 THIRD_PARTY_APPS = [
     "rest_framework",
     "corsheaders",
+    "drf_spectacular",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + MY_APPS + THIRD_PARTY_APPS
@@ -153,6 +154,18 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
 }
 
+
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'KenzieShoesAPI',
+    'DESCRIPTION': 'Kenzie shoes api is about to create an e-commerce shoe store',
+    'VERSION': '0.0.1',
+    'SERVE_INCLUDE_SCHEMA': False,
+
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
