@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import *
-from products.serializers import ProductSerializer, ProductOrderSerializer
+from products.serializers import ProductSerializer
 from users.serializers import UserSerializer
 from .models import UserOrder
 
@@ -8,7 +8,7 @@ from .models import UserOrder
 class OrderSerializer(serializers.ModelSerializer):
 
     user_buy = serializers.EmailField(source="user.email", read_only=True)
-    products = ProductOrderSerializer
+    products = ProductSerializer
 
     class Meta:
         
@@ -20,7 +20,5 @@ class OrderSerializer(serializers.ModelSerializer):
             "user_buy",
             "products",
         ]
-
-        # depth = 1
 
         read_only_fields = ["id", "buyed_at", "products"]

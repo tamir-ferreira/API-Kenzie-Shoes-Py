@@ -14,18 +14,8 @@ class ProductCartView(ListCreateAPIView):
     serializer_class = ProductCartSerializer
     queryset = Cart.objects.all()
 
-    # def get_queryset(self):
-    #     cart_product = self.queryset.filter(user=self.request.user.id)
-    #     for product in cart_product:
-    #         if cart_product.product.id == self.kwargs.get("pk"):
-    #         print(cart_product)
-
-        #     cart_product = self.queryset.filter(id=cart_product.id)
-            
-            # return self.queryset.get(id=cart_product.id)
-        # return self.queryset
-
     def perform_create(self, serializer):
+        print(self.request.data)
         product = get_object_or_404(Product, id=self.kwargs.get("pk"))
 
         self.check_object_permissions(self.request, product)
