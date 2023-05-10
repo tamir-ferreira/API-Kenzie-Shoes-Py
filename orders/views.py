@@ -35,7 +35,7 @@ class OrderView(CreateAPIView):
         for item in item_all:
             product_stock = Product.objects.get(id=item.product_id).stock
             if product_stock <= 0:
-                raise ValidationError({"detail": f"{product_stock.name}"})
+                raise ValidationError({"detail": "Produto indisponível"})
             quantitie_stock = product_stock - item.quantities
             if quantitie_stock <= 0:
                 Product.objects.filter(id=item.product_id).update(stock=0)
