@@ -1,7 +1,7 @@
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.generics import ListCreateAPIView, get_object_or_404, RetrieveUpdateDestroyAPIView
 from cart.serializers import ProductCartSerializer
-from users.permissions import IsAccountOwner
+from .permissions import IsAccountOwner
 from products.models import Product
 from .models import Cart
 from rest_framework.permissions import IsAuthenticated
