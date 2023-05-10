@@ -18,9 +18,11 @@ class ProductCartView(CreateAPIView):
     def perform_create(self, serializer):
         product = get_object_or_404(Product, id=self.kwargs.get("pk"))
         quantity = product.stock - self.request.data["quantities"]
-        if quantity <= 0:
+        cart = self.queryset.filter(product=product.id).count()
+        if cart != 0:
+            raise ValidationError({"detail": "Produto já inserido no carrinho"})
+        if quantity < 0:
             raise ValidationError({"detail": "Quantidade de produto indisponível"})
-
         self.check_object_permissions(self.request, product)
         serializer.save(product=product, user=self.request.user)
 
