@@ -19,7 +19,7 @@ class UserOrder(models.Model):
     )
 
     products = models.ForeignKey(
-        "products.Product", on_delete=models.PROTECT,
+        "products.Product", on_delete=models.CASCADE,
         related_name="products_order"
     )
 
