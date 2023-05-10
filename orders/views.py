@@ -2,7 +2,7 @@ from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
-from users.permissions import IsAccountOwner, IsAdminReadOnly
+from users.permissions import IsAccountOwner
 from rest_framework.pagination import PageNumberPagination
 from .serializers import OrderSerializer
 from .models import UserOrder
@@ -34,11 +34,10 @@ class OrderView(CreateAPIView):
             raise ValidationError({"detail": "Carrinho está vazio"})
         for item in item_all:
             product_stock = Product.objects.get(id=item.product_id).stock
-            if product_stock <= 0:
-                raise ValidationError({"detail": "Produto indisponível"})
             quantitie_stock = product_stock - item.quantities
-            if quantitie_stock <= 0:
+            if product_stock <= 0:
                 Product.objects.filter(id=item.product_id).update(stock=0)
+                raise ValidationError({"detail": "Produto indisponível"})
             Product.objects.filter(id=item.product_id).update(stock=quantitie_stock)
             serializer.save(products=item.product, user=user_obj)
         order = UserOrder.objects.filter(user_id=self.request.user.id).last()
@@ -68,7 +67,7 @@ class OrderDetailView(UpdateAPIView):
         send_mail("Alteração do status da ordem de compra",
                   f"{msg}",
                   settings.EMAIL_HOST_USER,
-                  [f"andrewairamdasilva@gmail.com"],
+                  [f"{order.user.email}"],
                   False)
 
 
