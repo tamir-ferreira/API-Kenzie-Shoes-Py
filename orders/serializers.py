@@ -1,13 +1,14 @@
 from rest_framework import serializers
 from .models import *
 from products.serializers import ProductSerializer
-from users.serializers import UserSerializer
-from .models import UserOrder
+from .models import UserOrder, OrderStatus
 
 
 class OrderSerializer(serializers.ModelSerializer):
 
     user_buy = serializers.EmailField(source="user.email", read_only=True)
+    status = serializers.ChoiceField(choices=OrderStatus.choices,
+                                     default=OrderStatus.REALIZADO)
     products = ProductSerializer
 
     class Meta:

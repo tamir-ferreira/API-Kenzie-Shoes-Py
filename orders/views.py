@@ -42,11 +42,11 @@ class OrderView(CreateAPIView):
             Product.objects.filter(id=item.product_id).update(stock=quantitie_stock)
             serializer.save(products=item.product, user=user_obj)
         order = UserOrder.objects.filter(user_id=self.request.user.id).last()
-        msg = f"Prezado(a) {user_obj.first_name}, Gostaríamos de informar que sua ordem de compra foi recebida e está em processo.Agradecemos sua confiança em nossa empresa para suprir suas necessidades e estamos comprometidos em fornecer o melhor serviço possível. Abaixo, você encontrará os detalhes da sua ordem: Número da ordem: {order.id} Data da ordem: {order.buyed_at} Produto: {order.products.name} Valor total: {order.products.value} Nós confirmamos que os produtos solicitados estão disponíveis em nosso estoque e serão enviados o mais breve possível. Caso haja algum problema com a disponibilidade do produto, entraremos em contato para discutir alternativas. Também gostaríamos de lembrar que, caso precise de suporte adicional, nossa equipe está sempre pronta para ajudar. Não hesite em nos contatar por telefone ou e-mail, e estaremos prontos para auxiliá-lo(a) com qualquer dúvida ou necessidade. Mais uma vez, agradecemos por escolher nossa empresa e esperamos continuar atendendo suas necessidades em futuras ocasiões. Atenciosamente, Kenzie Shoes APP"
+        msg = f"Prezado(a) {user_obj.first_name}, Gostaríamos de informar que seu ordem de compra foi {order.status}. Agradecemos sua confiança em nossa empresa para suprir suas necessidades e estamos comprometidos em fornecer o melhor serviço possível. Abaixo, você encontrará os detalhes da sua ordem: Número da ordem: {order.id} Data da ordem: {order.buyed_at} Produto: {order.products.name} Valor total: {order.products.value} Nós confirmamos que os produtos solicitados estão disponíveis em nosso estoque e serão enviados o mais breve possível. Caso haja algum problema com a disponibilidade do produto, entraremos em contato para discutir alternativas. Também gostaríamos de lembrar que, caso precise de suporte adicional, nossa equipe está sempre pronta para ajudar. Não hesite em nos contatar por telefone ou e-mail, e estaremos prontos para auxiliá-lo(a) com qualquer dúvida ou necessidade. Mais uma vez, agradecemos por escolher nossa empresa e esperamos continuar atendendo suas necessidades em futuras ocasiões. Atenciosamente, Kenzie Shoes APP"
         send_mail("Confirmação de Ordem de Compra",
                   f"{msg}",
                   settings.EMAIL_HOST_USER,
-                  [f"{order.user.first_name}"],
+                  [f"{order.user.email}"],
                   False)
         Cart.objects.filter(user_id=user_obj.id).delete()
 
@@ -64,7 +64,7 @@ class OrderDetailView(UpdateAPIView):
             raise ValidationError({"detail": "You do not have permission to perform this action."})
         serializer.save()
         order = UserOrder.objects.filter(user_id=self.request.user.id).last()
-        msg = f"Prezado(a) {order.user.first_name}, Gostaríamos de informar que o status do seu pedido foi alterado para {order.status}.Agradecemos sua confiança em nossa empresa para suprir suas necessidades e estamos comprometidos em fornecer o melhor serviço possível. Atenciosamente, Kenzie Shoes APP"
+        msg = f"Prezado(a) {order.user.first_name}, Gostaríamos de informar que o status do seu pedido foi alterado para {order.status}. Agradecemos sua confiança em nossa empresa para suprir suas necessidades e estamos comprometidos em fornecer o melhor serviço possível. Atenciosamente, Kenzie Shoes APP"
         send_mail("Alteração do status da ordem de compra",
                   f"{msg}",
                   settings.EMAIL_HOST_USER,
