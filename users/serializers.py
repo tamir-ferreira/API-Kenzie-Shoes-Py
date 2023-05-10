@@ -35,6 +35,8 @@ class UserSerializer(serializers.ModelSerializer):
 
         return instance
 
+    
+
     class Meta:
         model = User
         fields = [
