@@ -21,16 +21,19 @@ class UserSerializer(serializers.ModelSerializer):
 
     def update(self, instance: User, validated_data: dict) -> User:
         password = validated_data.pop("password", None)
+        address = validated_data.pop("address", None)
         for key, value in validated_data.items():
-            print(key)
-            print(value)
-            # setattr(instance, key, value)
-        # if password is not None:
-        #     instance.set_password(password)
+            setattr(instance, key, value)
+        if address is not None:
+            for key, value in address.items():
+                setattr(instance.address, key, value)
+                instance.address.save()
+        if password is not None:
+            instance.set_password(password)
 
-        # instance.save()
+        instance.save()
 
-        # return instance
+        return instance
 
     class Meta:
         model = User

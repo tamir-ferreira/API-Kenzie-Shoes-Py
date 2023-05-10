@@ -3,7 +3,7 @@ from .models import Cart
 from rest_framework.views import *
 
 
-class IsAccountOwner(permissions.BasePermission):
+class IsBuyAccountOwner(permissions.BasePermission):
     def has_object_permission(self, request: Request, view: View, obj: Cart) -> bool:
         user = Cart.objects.filter(user_id=request.user.id)
         cart_obj = user.filter(id=obj.id)
